@@ -7,9 +7,15 @@ Usernames and passwords are stored in a local MongoDB database. For local protot
 **Database:** UserDatabase  
 **Collection:** userInfo
 
-To insert new user: `db.userInfo.insert({username: 'admin', password: 'admin'})`
+To create the database locally:  
 
+```shell
+$ mongo  
+$ use UserDatabase # Creates new database  
+$ db.userInfo.insert({username: 'admin', password: 'admin'}) # Create userInfo collection & insert user  
 ```
+
+```javascript
 // connect to local database
 mongoose.connect('mongodb://localhost/UserDatabase');
 var Schema = mongoose.Schema;
