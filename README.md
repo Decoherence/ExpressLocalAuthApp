@@ -1,3 +1,6 @@
+README
+======
+
 Bare minimum web app using Express. Supports basic user authentication using Passport. Uses Jade template engine. 
 
 Usernames and passwords are stored in a local MongoDB database. For local prototyping only; **never use unencrypted passwords in production** (check out the *bcrypt-nodejs* package). 
