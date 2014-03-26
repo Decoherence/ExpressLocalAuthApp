@@ -10,25 +10,25 @@ var http = require('http');
 var path = require('path');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose/');
+var mongoose = require('mongoose');
 
 // connect to local database
-mongoose.connect('mongodb://localhost/MyDatabase');
+mongoose.connect('mongodb://localhost/UserDatabase');
 var Schema = mongoose.Schema;
-var UserDetail = new Schema({
+var UserSchema = new Schema({
   username: String,
   password: String
 }, {
   collection: 'userInfo'
 });
-var UserDetails = mongoose.model('userInfo', UserDetail); 
+var UserModel = mongoose.model('userInfo', UserSchema); 
 
 var app = express();
 
 // all environments
 app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
-//app.set('view engine', 'jade');
+app.set('view engine', 'jade');
 app.use(express.logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded());
@@ -47,7 +47,7 @@ if ('development' == app.get('env')) {
 app.get('/', routes.index);
 app.get('/users', user.list);
 app.get('/login', function(req, res) {
-  res.sendfile('views/login.html');
+  res.render('login');
 });
 
 // login handler routes
@@ -78,7 +78,7 @@ passport.deserializeUser(function(user, done) {
 passport.use(new LocalStrategy(function(username, password, done) {
   process.nextTick(function() {
     // auth check logic
-    UserDetails.findOne({
+    UserModel.findOne({
       'username': username,
     }, function(err, user) {
       if (err) {
